@@ -2,7 +2,6 @@ import pyautogui as pg
 from time import sleep
 from env import env
 from random import randint
-from validators import ValidationError, url
 from pathlib import Path
 
 
@@ -15,7 +14,7 @@ class VisitorBot:
     def __init__(self):
         self.counter = 0
         self.wait_until = 0
-        self.target_page = None
+        self.target_page = env['target_page'].rstrip('/')
 
     def get_file(self, file_name: str) -> str:
         path = Path(__file__).with_name(file_name)
@@ -29,16 +28,16 @@ class VisitorBot:
         if self.open_browser() is False:
             return
         sleep(3)
+        pg.moveTo(500, 500)
         pg.hotkey('ctrl', 't')
         search = set(env['search'])
         while len(search) > 0:
-            is_website = self.search(search.pop())
-            sleep(3)
-            if is_website is True:
-                self.visit_page(is_website=True)
-                return
+            self.search(search.pop())
+            pg.keyDown('end')
+            sleep(5)
             for i in range(0, randint(1, int(env['visits_limit']) + 1)):
                 self.visit_page()
+            self.visit_page(is_website=True)
 
     """
     find next link on search page, visit site, scroll and go back
@@ -50,14 +49,16 @@ class VisitorBot:
             pg.write(self.target_page)
         else:
             pg.write('http')
-        if is_website is True:
-            pg.hotkey('enter')
         pg.hotkey('ctrl', 'enter')
+        if is_website is True:
+            sleep(5)
+            if pg.locateCenterOnScreen(self.get_file(env['search_page_marker'])) is not None:
+                return
         # checking do we left search page
         while pg.locateCenterOnScreen(self.get_file(env['search_page_marker'])) is not None:
             sleep(1)
+        self.wait(init=True)
         if is_website is False:
-            self.wait(init=True)
             while self.wait() is False:
                 pg.scroll(randint(-20, -1))
         else:
@@ -84,15 +85,10 @@ class VisitorBot:
     focus of search bar and input keyword 
     """
 
-    def search(self, search: str) -> bool:
-        is_website = not isinstance(url(search), ValidationError)
+    def search(self, search: str) -> None:
         pg.hotkey('ctrl', 'k')
-        if is_website:
-            self.target_page = search.rstrip('/')
-            search = "find " + search
         pg.write(search)
         pg.hotkey('enter')
-        return is_website
 
     """
     wait specified time
@@ -116,8 +112,8 @@ class VisitorBot:
         if init is True:
             self.counter = 0
             self.wait_until = randint(
-                int(env['specific_page_visit_time_from']),
-                int(env['specific_page_visit_time_to'])
+                int(env['target_page_visit_time_from']),
+                int(env['target_page_visit_time_to'])
             )
             return False
         sleep_time = randint(1, env['max_rand_scroll_delay'])
