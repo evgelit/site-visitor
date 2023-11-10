@@ -28,6 +28,7 @@ class VisitorBot:
         if self.open_browser() is False:
             return
         sleep(3)
+        pg.hotkey('ctrl', 't')
         search = set(env['search'])
         while len(search) > 0:
             is_website = self.search(search.pop())
