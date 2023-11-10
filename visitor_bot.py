@@ -59,8 +59,6 @@ class VisitorBot:
         else:
             while self.rand_wait() is False:
                 pg.scroll(randint(-30, 30))
-            # return if we found specific website
-            return
         pg.hotkey('alt', 'left')
 
     """
