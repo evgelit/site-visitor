@@ -56,16 +56,14 @@ class VisitorBot:
         # checking do we left search page
         while pg.locateCenterOnScreen(self.get_file(env['search_page_marker'])) is not None:
             sleep(1)
-        self.wait(init=True)
         if is_website is False:
+            self.wait(init=True)
             while self.wait() is False:
                 pg.scroll(randint(-20, -1))
         else:
             self.rand_wait(init=True)
             while self.rand_wait() is False:
                 pg.scroll(randint(-30, 30))
-            # return if we found specific website
-            return
         pg.hotkey('alt', 'left')
 
     """
