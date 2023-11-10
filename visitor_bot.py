@@ -15,6 +15,7 @@ class VisitorBot:
     def __init__(self):
         self.counter = 0
         self.wait_until = 0
+        self.target_page = None
 
     def get_file(self, file_name: str) -> str:
         path = Path(__file__).with_name(file_name)
@@ -45,7 +46,10 @@ class VisitorBot:
 
     def visit_page(self, is_website=False):
         pg.hotkey('ctrl', 'f')
-        pg.write('http')
+        if is_website is not False:
+            pg.write(self.target_page)
+        else:
+            pg.write('http')
         if is_website is True:
             pg.hotkey('enter')
         pg.hotkey('ctrl', 'enter')
@@ -57,6 +61,7 @@ class VisitorBot:
             while self.wait() is False:
                 pg.scroll(randint(-20, -1))
         else:
+            self.rand_wait(init=True)
             while self.rand_wait() is False:
                 pg.scroll(randint(-30, 30))
             # return if we found specific website
@@ -85,6 +90,7 @@ class VisitorBot:
         is_website = not isinstance(url(search), ValidationError)
         pg.hotkey('ctrl', 'k')
         if is_website:
+            self.target_page = search.rstrip('/')
             search = "find " + search
         pg.write(search)
         pg.hotkey('enter')
