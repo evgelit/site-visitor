@@ -37,6 +37,7 @@ class VisitorBot:
             sleep(5)
             for i in range(0, randint(1, int(env['visits_limit']) + 1)):
                 self.visit_page()
+                sleep(1)
             self.visit_page(is_website=True)
 
     """
