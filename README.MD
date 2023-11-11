@@ -16,10 +16,12 @@
 
     "max_rand_scroll_delay": 10, максимальна затримка між скроллінгом
 
-    "search": ["hosting", "provider", "website", "https://www.ionos.com/"], перелік пошукових слів та цільовий сайт
+     "target_page": "https://cityhost.ua/", цільовий сайт
+
+    "search": ["website","hosting"], слова пошуку
 
     "search_page_marker": "google.png" логотип пошукової сторінки за яким бот орієнтується що пошукову сторінку покинуто та він перейшов на сайт
 
 Бот бере випадкову послідовність пошукових слів та відвідує сайти доти доки не потрапить на цільовий сайт
 
-Необхідні бібліотеки для роботи скріпта: pyautogui, time, random, validators, pathlib
+Необхідні бібліотеки для роботи скріпта: pyautogui, time, random, pathlib
