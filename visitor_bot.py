@@ -8,7 +8,7 @@ from random import randint, uniform
 class VisitorBot:
 
     """
-    Set target page
+    Set target page and force to use ImageNotFoundException for locateOnScreen method
     """
     def __init__(self):
         pg.useImageNotFoundException()
