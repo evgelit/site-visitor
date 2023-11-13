@@ -26,6 +26,9 @@ class VisitorBot:
 
     def run(self) -> None:
         if self.open_browser() is False:
+            print(f"Tried to find browser on screen by icon "
+                  f"{Path(__file__).with_name(env['browser_icon'])} "
+                  f"but no success. please make sure you use correct image of icon")
             return
         sleep(3)
         pg.moveTo(500, 500)
