@@ -45,7 +45,7 @@ class VisitorBot:
         _iter = randint(1, 10)
         while _iter > 0:
             pg.press("enter")
-            iter -= 1
+            _iter -= 1
         pg.hotkey('ctrl', 'enter')
         if self.is_loaded(30) is False:
             pg.hotkey('alt', 'left')
