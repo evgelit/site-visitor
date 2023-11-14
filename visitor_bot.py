@@ -87,6 +87,7 @@ class VisitorBot:
     def search(self, search: str) -> None:
         pg.hotkey('ctrl', 'k')
         pg.write(search, uniform(0.1, 0.3))
+        pg.hotkey('del')
         pg.hotkey('enter')
 
     """
